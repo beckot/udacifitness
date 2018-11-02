@@ -4,7 +4,9 @@ import { getMetricMetaInfo, timeToString } from '../utils/helpers'
 import UdaciSlider from './UdaciSlider'
 import UdaciSteppers from './UdaciSteppers'
 import DateHeader from './DateHeader'
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'
+import TextButton from './TextButton'
+import { submitEntry, removeEntry } from '../utils/api'
 
 function SubmitBtn ({ onPress }) {
   return (
@@ -54,24 +56,42 @@ export default class AddEntry extends Component {
     const key = timeToString()
     const entry = this.state
 
-    // Update Redux
+    // TODO: Update Redux
 
     this.setState(() => ({ run: 0, bike: 0, swim: 0, sleep: 0, eat: 0 }))
 
-    // Navigate to home
+    // TODO:  Navigate to home
 
-    // Save to "DB"
+    submitEntry({entry, key})
 
-    // Clear local notification
+    // TODO:  Clear local notification
   }
+
+  reset = () => {
+    const key = timeToString()
+
+    // TODO Update redux
+    // Route to home
+    removeEntry(key)
+  }
+
   render() {
     const metaInfo = getMetricMetaInfo()
 
 
     if (this.props.alreadyLogged) {
+      
+      return(
+        <View>
+          <Ionicons 
+            name='ios-happy'
+            size={200} />
+          <Text> Already logged stuff for today!💪</Text>
+          <TextButton onPress={this.reset}>Reset</TextButton>
+        </View>
+      )
 
     }
-
     else {
       return (
         <View>
